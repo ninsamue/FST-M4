@@ -1,0 +1,109 @@
+PS C:\Users\NinaSamuel> docker container run -it -p 9870:9870 -p 8088:8088 registry.gitlab.com/training-support/training-environments:hadoop-v1 bash
+/
+ * Starting OpenBSD Secure Shell server sshd                                                                                                           [ OK ]
+Waiting for hdfs to exit from safemode
+
+
+Safe mode is OFF
+Started
+
+root@2c3568199abd:/# vim zipcodes.csv
+root@2c3568199abd:/# cat zipcodes.csv
+,PARC PARQUE,704,PR
+2,US,PASEO COSTA DEL SUR,704,PR
+10,US,BDA SAN LUIS,709,PR
+61391,US,CINGULAR WIRELESS,76166,TX
+61392,US,FORT WORTH,76177,TX
+61393,US,FT WORTH,76177,TX
+4,US,URB EUGENE RICE,704,PR
+39827,US,MESA,85209,AZ
+39828,US,MESA,85210,AZ
+49345,US,HILLIARD,32046,FL
+49346,US,HOLDER,34445,FL
+49347,US,HOLT,32564,FL
+49348,US,HOMOSASSA,34487,FL
+3,US,SECT LANAUSSE,704,PR
+54354,US,SPRING GARDEN,36275,AL
+54355,US,SPRINGVILLE,35146,AL
+54356,US,SPRUCE PINE,35585,AL
+76511,US,ASH HILL,27007,NC
+76512,US,ASHEBORO,27203,NC
+76513,US,ASHEBORO,27204,NC
+
+
+root@2c3568199abd:/# hive
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/usr/local/apache-hive-3.1.2-bin/lib/log4j-slf4j-impl-2.10.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/usr/local/hadoop-3.3.1/share/hadoop/common/lib/slf4j-log4j12-1.7.30.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]
+Hive Session ID = fbac15fa-0cff-4713-b5fd-17f4d9562c72
+
+Logging initialized using configuration in jar:file:/usr/local/apache-hive-3.1.2-bin/lib/hive-common-3.1.2.jar!/hive-log4j2.properties Async: true
+Hive Session ID = 9b1384f1-ce63-40eb-ad93-3f73ca783873
+Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+hive> CREATE TABLE zipcodes (RecordNumber int, Country string, City string, Zipcode int) PARTITIONED BY (state string) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+OK
+Time taken: 2.642 seconds
+
+hive> LOAD DATA LOCAL INPATH '/zipcodes.csv' INTO TABLE zipcodes;
+Query ID = root_20210924041128_8d72d71e-b23b-4533-a241-8678f02a3f53
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1632456469519_0001, Tracking URL = http://2c3568199abd:8088/proxy/application_1632456469519_0001/
+Kill Command = /usr/local/hadoop/bin/mapred job  -kill job_1632456469519_0001
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2021-09-24 04:12:48,058 Stage-1 map = 0%,  reduce = 0%
+2021-09-24 04:13:38,445 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 42.03 sec
+2021-09-24 04:13:53,265 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 50.38 sec
+MapReduce Total cumulative CPU time: 50 seconds 380 msec
+Ended Job = job_1632456469519_0001
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to directory hdfs://2c3568199abd:9000/user/hive/warehouse/zipcodes/.hive-staging_hive_2021-09-24_04-11-29_452_327283370983512812-1/-ext-10000
+Loading data to table default.zipcodes partition (state=null)
+
+
+         Time taken to load dynamic partitions: 3.079 seconds
+         Time taken for adding to write entity : 0.015 seconds
+MapReduce Jobs Launched:
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 50.38 sec   HDFS Read: 17405 HDFS Write: 2565 SUCCESS
+Total MapReduce CPU Time Spent: 50 seconds 380 msec
+OK
+Time taken: 157.823 seconds
+
+hive> SHOW PARTITIONS zipcodes;
+OK
+state=AL
+state=AZ
+state=FL
+state=NC
+state=PR
+state=TX
+state=__HIVE_DEFAULT_PARTITION__
+Time taken: 0.549 seconds, Fetched: 7 row(s)
+
+hive> dfs -ls -R /user/hive/warehouse/zipcodes/;
+drwxr-xr-x   - root supergroup          0 2021-09-24 04:13 /user/hive/warehouse/zipcodes/state=AL
+-rw-r--r--   1 root supergroup         83 2021-09-24 04:13 /user/hive/warehouse/zipcodes/state=AL/000000_0
+drwxr-xr-x   - root supergroup          0 2021-09-24 04:13 /user/hive/warehouse/zipcodes/state=AZ
+-rw-r--r--   1 root supergroup         40 2021-09-24 04:13 /user/hive/warehouse/zipcodes/state=AZ/000000_0
+drwxr-xr-x   - root supergroup          0 2021-09-24 04:13 /user/hive/warehouse/zipcodes/state=FL
+-rw-r--r--   1 root supergroup         91 2021-09-24 04:13 /user/hive/warehouse/zipcodes/state=FL/000000_0
+drwxr-xr-x   - root supergroup          0 2021-09-24 04:13 /user/hive/warehouse/zipcodes/state=NC
+-rw-r--r--   1 root supergroup         72 2021-09-24 04:13 /user/hive/warehouse/zipcodes/state=NC/000000_0
+drwxr-xr-x   - root supergroup          0 2021-09-24 04:13 /user/hive/warehouse/zipcodes/state=PR
+-rw-r--r--   1 root supergroup        100 2021-09-24 04:13 /user/hive/warehouse/zipcodes/state=PR/000000_0
+drwxr-xr-x   - root supergroup          0 2021-09-24 04:13 /user/hive/warehouse/zipcodes/state=TX
+-rw-r--r--   1 root supergroup         83 2021-09-24 04:13 /user/hive/warehouse/zipcodes/state=TX/000000_0
+drwxr-xr-x   - root supergroup          0 2021-09-24 04:13 /user/hive/warehouse/zipcodes/state=__HIVE_DEFAULT_PARTITION__
+-rw-r--r--   1 root supergroup         22 2021-09-24 04:13 /user/hive/warehouse/zipcodes/state=__HIVE_DEFAULT_PARTITION__/000000_0
+

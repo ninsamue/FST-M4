@@ -1,0 +1,34 @@
+docker container run -it -p 9870:9870 -p 8088:8088 registry.gitlab.com/training-support/training-environments:hadoop-v1 bash
+root@af333ad81a17:/# mkdir myFiles
+root@af333ad81a17:/# cd myFiles
+root@af333ad81a17:/myFiles# vim file01.txt
+root@af333ad81a17:/myFiles# hdfs dfs -put ./file01.txt /user/activity2/
+root@af333ad81a17:/myFiles# vim wordcount.pig
+root@af333ad81a17:/myFiles# hdfs dfs -put ./wordcount.pig /user/activity2/
+root@af333ad81a17:/myFiles# hdfs dfs -cat /user/activity2/wordcount.pig
+-- Load input file from HDFS
+inputFile = LOAD 'hdfs:///user/activity2/file01.txt' AS (line);
+-- Tokeize each word in the file (Map)
+words = FOREACH inputFile GENERATE FLATTEN(TOKENIZE(line)) AS word;
+-- Combine the words from the above stage
+grpd = GROUP words BY word;
+-- Count the occurence of each word (Reduce)
+cntd = FOREACH grpd GENERATE group, COUNT(words);
+-- Store the result in HDFSs
+STORE cntd INTO 'hdfs:///user/activity2/results';
+root@af333ad81a17:/myFiles# hdfs dfs -cat /user/activity2/file01.txt
+Hello World Bye World
+root@af333ad81a17:/myFiles# pig wordcount.pig
+2021-09-20 04:46:49,763 INFO pig.ExecTypeProvider: Trying ExecType : LOCAL
+2021-09-20 04:46:49,766 INFO pig.ExecTypeProvider: Trying ExecType : MAPREDUCE
+2021-09-20 04:46:49,778 INFO pig.ExecTypeProvider: Picked MAPREDUCE as the ExecType
+.
+.
+.
+2021-09-20 04:51:31,027 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Success!
+2021-09-20 04:51:31,115 [main] INFO  org.apache.pig.Main - Pig script completed in 4 minutes, 41 seconds and 636 milliseconds (281636 ms)
+root@af333ad81a17:/myFiles# hdfs dfs -cat /user/activity2/results/part-r-00000
+Bye     1
+Hello   1
+World   2
+        0

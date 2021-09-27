@@ -1,0 +1,12 @@
+root@6021c844d517:/myFiles# hdfs dfs -mkdir /user/activity1
+root@6021c844d517:/myFiles# touch txtFile.txt
+root@6021c844d517:/myFiles# vim txtFile.txt
+root@6021c844d517:/myFiles# touch csvFile.csv
+root@6021c844d517:/myFiles# vim csvFile.csv
+root@6021c844d517:/myFiles# hdfs dfs -mkdir /user/activity1/textData
+root@6021c844d517:/myFiles# hdfs dfs -copyFromLocal txtFile.txt /user/activity1/textData
+root@6021c844d517:/myFiles# hdfs dfs -copyFromLocal csvFile.csv /user/activity1/textData
+root@6021c844d517:/myFiles# hdfs dfs -stat "type:%F permissions:%a %u:%g size:%b name:%n" /user/activity1/textData/txtFile.txt
+type:regular file permissions:644 root:supergroup size:157 name:txtFile.txt
+root@6021c844d517:/myFiles# hdfs dfs -stat "type:%F permissions:%a %u:%g size:%b name:%n" /user/activity1/textData/csvFile.csv
+type:regular file permissions:644 root:supergroup size:527 name:csvFile.csv

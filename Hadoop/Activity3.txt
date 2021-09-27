@@ -1,0 +1,47 @@
+PS C:\Users\NinaSamuel> docker container run -it -p 9870:9870 -p 8088:8088 registry.gitlab.com/training-support/training-environments:hadoop-v1 bash
+/
+ * Starting OpenBSD Secure Shell server sshd                                                                                                           [ OK ]
+Waiting for hdfs to exit from safemode
+
+Safe mode is OFF
+Started
+root@f6eda9fa154c:/# hdfs dfs -mkdir /user/activity3/
+root@f6eda9fa154c:/# mkdir myFiles
+root@f6eda9fa154c:/# cd myFiles
+root@f6eda9fa154c:/myFiles# vim sales.csv
+root@f6eda9fa154c:/myFiles# hdfs dfs -put ./sales.csv /user/activity3/
+root@f6eda9fa154c:/myFiles# cat salesCSV.pig
+-- Load the CSV file
+salesTable = LOAD 'hdfs:///user/activity3/sales.csv' USING PigStorage(',') AS (Product:chararray,Price:chararray,Payment_Type:chararray,Name:chararray,City:chararray,State:chararray,Country:chararray);
+-- Group data using the country column
+GroupByCountry = GROUP salesTable BY Country;
+-- Generate result format
+CountByCountry = FOREACH GroupByCountry GENERATE CONCAT((chararray)$0, CONCAT(':', (chararray)COUNT($1)));
+-- Save result in HDFS folder
+STORE CountByCountry INTO 'salesOutput' USING PigStorage('\t');
+root@f6eda9fa154c:/myFiles# hdfs dfs -cat /user/root/salesOutput/part-r-00000
+France:1
+Israel:1
+Country:1
+Australia:1
+Netherlands:1
+United States:9
+United Kingdom:1
+
+root@f6eda9fa154c:/myFiles# cat salesCSV.pig
+-- Load the CSV file
+salesTable = LOAD 'hdfs:///user/activity3/sales.csv' USING PigStorage(',') AS (Product:chararray,Price:chararray,Payment_Type:chararray,Name:chararray,City:chararray,State:chararray,Country:chararray);
+-- Group data using the country column
+GroupByCountry = GROUP salesTable BY Country;
+-- Generate result format
+CountByCountry = FOREACH GroupByCountry GENERATE CONCAT((chararray)$0, CONCAT(':', (chararray)COUNT($1)));
+-- Save result in HDFS folder
+STORE CountByCountry INTO 'hdfs:///user/activity3/salesOutput' USING PigStorage('\t');
+root@f6eda9fa154c:/myFiles# hdfs dfs -cat /user/activity3/salesOutput/part-r-00000
+France:1
+Israel:1
+Country:1
+Australia:1
+Netherlands:1
+United States:9
+United Kingdom:1

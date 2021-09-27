@@ -1,0 +1,141 @@
+hive> CREATE TABLE zipcodesb (RecordNumber int, Country string, City string, Zipcode int) PARTITIONED BY (state string) CLUSTERED BY (Zipcode) INTO 32 BUCKETS ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+OK
+Time taken: 0.65 seconds
+
+hive> LOAD DATA LOCAL INPATH '/zipcodes.csv' INTO TABLE zipcodesb;
+Query ID = root_20210924043747_73a2e067-c355-4edb-a291-44d4fe646576
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks determined at compile time: 32
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1632456469519_0004, Tracking URL = http://2c3568199abd:8088/proxy/application_1632456469519_0004/
+Kill Command = /usr/local/hadoop/bin/mapred job  -kill job_1632456469519_0004
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 32
+2021-09-24 04:38:16,341 Stage-1 map = 0%,  reduce = 0%
+2021-09-24 04:38:38,826 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 15.48 sec
+2021-09-24 04:39:33,987 Stage-1 map = 100%,  reduce = 2%, Cumulative CPU 20.11 sec
+2021-09-24 04:39:47,397 Stage-1 map = 100%,  reduce = 4%, Cumulative CPU 24.79 sec
+2021-09-24 04:39:54,340 Stage-1 map = 100%,  reduce = 8%, Cumulative CPU 32.34 sec
+2021-09-24 04:40:04,561 Stage-1 map = 100%,  reduce = 9%, Cumulative CPU 46.36 sec
+2021-09-24 04:40:12,743 Stage-1 map = 100%,  reduce = 14%, Cumulative CPU 52.74 sec
+2021-09-24 04:40:26,411 Stage-1 map = 100%,  reduce = 15%, Cumulative CPU 72.03 sec
+2021-09-24 04:40:35,192 Stage-1 map = 100%,  reduce = 16%, Cumulative CPU 81.91 sec
+2021-09-24 04:40:37,760 Stage-1 map = 100%,  reduce = 18%, Cumulative CPU 91.48 sec
+2021-09-24 04:40:40,469 Stage-1 map = 100%,  reduce = 19%, Cumulative CPU 112.74 sec
+2021-09-24 04:41:23,270 Stage-1 map = 100%,  reduce = 23%, Cumulative CPU 120.59 sec
+2021-09-24 04:41:25,690 Stage-1 map = 100%,  reduce = 27%, Cumulative CPU 130.78 sec
+2021-09-24 04:41:27,021 Stage-1 map = 100%,  reduce = 31%, Cumulative CPU 139.02 sec
+2021-09-24 04:41:54,014 Stage-1 map = 100%,  reduce = 32%, Cumulative CPU 149.97 sec
+2021-09-24 04:41:58,208 Stage-1 map = 100%,  reduce = 33%, Cumulative CPU 161.69 sec
+2021-09-24 04:42:01,321 Stage-1 map = 100%,  reduce = 34%, Cumulative CPU 176.91 sec
+2021-09-24 04:42:11,637 Stage-1 map = 100%,  reduce = 35%, Cumulative CPU 198.25 sec
+2021-09-24 04:42:13,339 Stage-1 map = 100%,  reduce = 36%, Cumulative CPU 216.87 sec
+2021-09-24 04:42:25,934 Stage-1 map = 100%,  reduce = 38%, Cumulative CPU 216.87 sec
+2021-09-24 04:43:17,201 Stage-1 map = 100%,  reduce = 42%, Cumulative CPU 245.7 sec
+2021-09-24 04:43:18,685 Stage-1 map = 100%,  reduce = 44%, Cumulative CPU 250.94 sec
+2021-09-24 04:43:22,394 Stage-1 map = 100%,  reduce = 46%, Cumulative CPU 255.12 sec
+2021-09-24 04:43:23,714 Stage-1 map = 100%,  reduce = 48%, Cumulative CPU 259.35 sec
+2021-09-24 04:43:28,185 Stage-1 map = 100%,  reduce = 50%, Cumulative CPU 264.55 sec
+2021-09-24 04:43:30,916 Stage-1 map = 100%,  reduce = 51%, Cumulative CPU 270.86 sec
+2021-09-24 04:43:32,227 Stage-1 map = 100%,  reduce = 52%, Cumulative CPU 278.02 sec
+2021-09-24 04:43:33,519 Stage-1 map = 100%,  reduce = 53%, Cumulative CPU 286.7 sec
+2021-09-24 04:43:39,977 Stage-1 map = 100%,  reduce = 55%, Cumulative CPU 305.38 sec
+2021-09-24 04:43:41,108 Stage-1 map = 100%,  reduce = 56%, Cumulative CPU 312.7 sec
+2021-09-24 04:44:31,837 Stage-1 map = 100%,  reduce = 58%, Cumulative CPU 317.84 sec
+2021-09-24 04:44:33,513 Stage-1 map = 100%,  reduce = 60%, Cumulative CPU 324.72 sec
+2021-09-24 04:44:34,789 Stage-1 map = 100%,  reduce = 62%, Cumulative CPU 330.06 sec
+2021-09-24 04:44:39,204 Stage-1 map = 100%,  reduce = 65%, Cumulative CPU 334.28 sec
+2021-09-24 04:44:41,009 Stage-1 map = 100%,  reduce = 67%, Cumulative CPU 338.12 sec
+2021-09-24 04:44:43,407 Stage-1 map = 100%,  reduce = 68%, Cumulative CPU 344.49 sec
+2021-09-24 04:44:45,359 Stage-1 map = 100%,  reduce = 70%, Cumulative CPU 347.9 sec
+2021-09-24 04:44:46,708 Stage-1 map = 100%,  reduce = 71%, Cumulative CPU 356.93 sec
+2021-09-24 04:44:49,214 Stage-1 map = 100%,  reduce = 72%, Cumulative CPU 364.12 sec
+2021-09-24 04:44:52,921 Stage-1 map = 100%,  reduce = 73%, Cumulative CPU 372.14 sec
+2021-09-24 04:44:56,469 Stage-1 map = 100%,  reduce = 75%, Cumulative CPU 388.94 sec
+2021-09-24 04:45:34,264 Stage-1 map = 100%,  reduce = 77%, Cumulative CPU 395.08 sec
+2021-09-24 04:45:37,148 Stage-1 map = 100%,  reduce = 79%, Cumulative CPU 399.96 sec
+2021-09-24 04:45:41,273 Stage-1 map = 100%,  reduce = 81%, Cumulative CPU 406.0 sec
+2021-09-24 04:45:42,594 Stage-1 map = 100%,  reduce = 82%, Cumulative CPU 411.23 sec
+2021-09-24 04:45:46,897 Stage-1 map = 100%,  reduce = 84%, Cumulative CPU 416.38 sec
+2021-09-24 04:45:48,027 Stage-1 map = 100%,  reduce = 89%, Cumulative CPU 425.05 sec
+2021-09-24 04:45:49,403 Stage-1 map = 100%,  reduce = 90%, Cumulative CPU 432.32 sec
+2021-09-24 04:45:53,129 Stage-1 map = 100%,  reduce = 91%, Cumulative CPU 438.57 sec
+2021-09-24 04:45:55,522 Stage-1 map = 100%,  reduce = 92%, Cumulative CPU 444.21 sec
+2021-09-24 04:46:02,299 Stage-1 map = 100%,  reduce = 94%, Cumulative CPU 457.23 sec
+2021-09-24 04:46:30,170 Stage-1 map = 100%,  reduce = 97%, Cumulative CPU 467.19 sec
+2021-09-24 04:46:35,156 Stage-1 map = 100%,  reduce = 99%, Cumulative CPU 477.3 sec
+2021-09-24 04:46:39,368 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 480.83 sec
+MapReduce Total cumulative CPU time: 8 minutes 1 seconds 950 msec
+Ended Job = job_1632456469519_0004
+Loading data to table default.zipcodesb partition (state=null)
+
+
+         Time taken to load dynamic partitions: 2.829 seconds
+         Time taken for adding to write entity : 0.003 seconds
+Launching Job 2 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1632456469519_0005, Tracking URL = http://2c3568199abd:8088/proxy/application_1632456469519_0005/
+Kill Command = /usr/local/hadoop/bin/mapred job  -kill job_1632456469519_0005
+Hadoop job information for Stage-3: number of mappers: 1; number of reducers: 1
+2021-09-24 04:47:45,439 Stage-3 map = 0%,  reduce = 0%
+2021-09-24 04:48:12,233 Stage-3 map = 100%,  reduce = 0%, Cumulative CPU 18.21 sec
+2021-09-24 04:48:30,423 Stage-3 map = 100%,  reduce = 100%, Cumulative CPU 26.25 sec
+MapReduce Total cumulative CPU time: 26 seconds 250 msec
+Ended Job = job_1632456469519_0005
+MapReduce Jobs Launched:
+Stage-Stage-1: Map: 1  Reduce: 32   Cumulative CPU: 481.95 sec   HDFS Read: 280258 HDFS Write: 7257 SUCCESS
+Stage-Stage-3: Map: 1  Reduce: 1   Cumulative CPU: 26.25 sec   HDFS Read: 27129 HDFS Write: 1705 SUCCESS
+Total MapReduce CPU Time Spent: 8 minutes 28 seconds 200 msec
+OK
+Time taken: 649.008 seconds
+hive> SELECT * FROM zipcodesb WHERE state='PR' and zipcode=704;
+OK
+3       US      SECT LANAUSSE   704     PR
+2       US      PASEO COSTA DEL SUR     704     PR
+4       US      URB EUGENE RICE 704     PR
+Time taken: 1.394 seconds, Fetched: 3 row(s)
+hive> dfs -ls -R /user/hive/warehouse/zipcodesb/state=PR;
+-rw-r--r--   1 root supergroup         77 2021-09-24 04:39 /user/hive/warehouse/zipcodesb/state=PR/000000_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000001_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000002_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000003_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000004_0
+-rw-r--r--   1 root supergroup         23 2021-09-24 04:40 /user/hive/warehouse/zipcodesb/state=PR/000005_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000006_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000007_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000008_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000009_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000010_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000011_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000012_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000013_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000014_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000015_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000016_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000017_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000018_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000019_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000020_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000021_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000022_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000023_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000024_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000025_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000026_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000027_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000028_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000029_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000030_0
+-rw-r--r--   1 root supergroup          0 2021-09-24 04:46 /user/hive/warehouse/zipcodesb/state=PR/000031_0
+
