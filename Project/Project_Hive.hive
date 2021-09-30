@@ -1,0 +1,25 @@
+--Activity 1
+CREATE TABLE DIALOGUES (character STRING, lines STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+
+LOAD DATA INPATH 'project/*' INTO table DIALOGUES;
+
+CREATE TABLE DIALOGUES_COUNTS AS
+SELECT character, count(*) as count FROM DIALOGUES
+GROUP BY character
+ORDER BY count desc;
+
+select * from DIALOGUES_COUNTS;
+
+INSERT OVERWRITE LOCAL DIRECTORY '/export'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+select * from DIALOGUES_COUNTS;
+
+--Activity 2
+
+CREATE TABLE DIALOGUESIV (character STRING, lines STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+
+LOAD DATA INPATH 'project/episodeIV_dialouges.txt' INTO table DIALOGUESIV;
+
+select count(*) as no_of_lines_Luke from dialoguesiv where instr(lines, 'Luke') != 0;
